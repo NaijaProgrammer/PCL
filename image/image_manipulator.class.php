@@ -1,9 +1,9 @@
 <?php
 
-class ImageManipulator{
-
-	public static function image_data_uri($imgfile, $mimetype){
-
+class ImageManipulator
+{
+	public static function image_data_uri($imgfile, $mimetype)
+	{
  		$filecontents = file_get_contents($imgfile);
  		$encoding     = base64_encode($filecontents);
  		return ('data:' . $mimetype . ';base64,'. $encoding);
@@ -11,9 +11,9 @@ class ImageManipulator{
  		//usage: <img src="image_data_uri('logo.png', 'image/png');" alt="imgAlt" />
 	}
 	
-	public static function show_image($options){
-		
-		$params = array('image'=>'', 'is_link'=>false, 'linked_page'=>'', 'alt'=>'', 'title'=>'', 'class'=>'', 'id'=>'', 'caption'=>'', 'width'=>'', 
+	public static function show_image($options)
+	{
+		$params = array('url'=>'', 'is_link'=>false, 'linked_page'=>'', 'alt'=>'', 'title'=>'', 'class'=>'', 'id'=>'', 'caption'=>'', 'width'=>'', 
                                   'height'=>'', 
 				);
 
@@ -30,19 +30,20 @@ class ImageManipulator{
 		$width = $params['width'];
 		$height = $params['height'];
 
-		if(true == $is_link){
+		if(true == $is_link)
+		{
 			$linked_image = " <a href=\"$linked_page\"> ";
 			$linked_image.= "<img width=\"$width\" height=\"$height\" src=\"$image\" alt=\"$alt\" title=\"$title\" id=\"$id\" class=\"$class\" \>";
 			$linked_image.= "</a>";
 		}
-		else if(false == $is_link){
+		else if(false == $is_link)
+		{
 			$linked_image = "<img width=\"$width\" height=\"$height\" src=\"$image\" alt=\"$alt\" title=\"$title\" id=\"$id\" class=\"$class\" \>";
 		}
-		if($caption != ""){
+		if($caption != "")
+		{
 			$linked_image.= '<br />'. $caption;
 		}
 		return $linked_image;
 	}
 }
-
-?>
