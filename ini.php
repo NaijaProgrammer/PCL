@@ -7,7 +7,7 @@ $current_script_paths = UrlInspector::get_path(dirname($_SERVER['SCRIPT_FILENAME
 
 defined("PHPUTIL_DIR") or define("PHPUTIL_DIR", str_replace( '\\', '/', dirname(__FILE__) ). '/');  //file path to PHPUtil
 defined("CURRENT_SCRIPT_FILE_PATH") or define("CURRENT_SCRIPT_FILE_PATH", substr($current_script_paths['dir_path'], 0, -1)); //file system (directory) path to currently executing script
-defined("CURRENT_SCRIPT_HTTP_PAHT") or define("CURRENT_SCRIPT_HTTP_PATH", substr($current_script_paths['http_path'], 0, -1)); //http path to currently executing script (available only if currently executing script is located inside the web root folder or any of its directories)
+defined("CURRENT_SCRIPT_HTTP_PATH") or define("CURRENT_SCRIPT_HTTP_PATH", substr($current_script_paths['http_path'], 0, -1)); //http path to currently executing script (available only if currently executing script is located inside the web root folder or any of its directories)
 
 spl_autoload_register( 
 
