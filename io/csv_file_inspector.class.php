@@ -21,17 +21,17 @@ class CsvFileInspector
                 $upload_path = $setup['upload_path'];
                 $unlink_file = $setup['unlink_file'];
 
-		if( is_resource($csv_file) ) //i.e a file already created using fopen($file_handle_name), possibly by a third party
+		if( is_resource($csv_file) ) //a file already created using fopen($file_handle_name), possibly by a third party
 		{
 			$csv_file        = '';
 			$csv_file_handle = $csv_file;
 		}
-		else if( is_string($csv_file) ) //i.e a path to the csv file
+		else if( is_string($csv_file) ) //a path to the csv file
 		{
 			$csv_file         = $csv_file;
 			$csv_file_handle  = fopen($csv_file, 'r');
 		}
-		else if( is_array($csv_file) ) //i.e an array of the super-global $_FILES uploaded from an html form
+		else if( is_array($csv_file) ) //an array of the super-global $_FILES uploaded from an html form
 		{
 			$csv_manip = new CsvFileManipulator($csv_file, $upload_path);
 			$csv_file_handle = $csv_manip->get_file_handle();
@@ -50,5 +50,3 @@ class CsvFileInspector
 		return array('file_path'=>$csv_file, 'resource_handle'=>$csv_file_handle);
 	}
 }
-
-?>

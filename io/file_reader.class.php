@@ -1,32 +1,30 @@
 <?php
 
-class FileReader{
-
+class FileReader
+{
 	private $file         = '';
 	private $file_pointer = null;
 
-	public function __construct($file){
-
+	public function __construct($file)
+	{
 		$this->set($file);
 		$this->open();
-
 	}
 
-	public function is_readable(){
-		
+	public function is_readable()
+	{
 		return ( $this->get_file_pointer() && is_readable($this->get_file()) );
 	}	
 
-	public function read($length = 0){
-
-		if( $this->is_readable() ){
-
+	public function read($length = 0)
+	{
+		if( $this->is_readable() )
+		{
 			$file_pointer = $this->get_file_pointer();
 
-			if($length > 0){
-
+			if($length > 0)
+			{
 				return fread($file_pointer, $length);
-
 			}
 
 			return fread($file_pointer, filesize($this->get_file()));
@@ -35,10 +33,10 @@ class FileReader{
 		return false;
 	}
 
-	public function download(){
-
-   		if ($this->is_readable()) { 
-
+	public function download()
+	{
+   		if ($this->is_readable())
+		{ 
 			$file = $this->get_file();
 
     			header('Content-Description: File Transfer');
@@ -53,51 +51,50 @@ class FileReader{
  		return false;
 	}
 
-	public function get_file(){
-
+	public function get_file()
+	{
 		return $this->file;
 	}
 
-	public function get_file_pointer(){
-
+	public function get_file_pointer()
+	{
 		return $this->file_pointer;
 	}
 
-	public function close($kill = false){
-
-		if($kill && $this->get_file()){
+	public function close($kill = false)
+	{
+		if($kill && $this->get_file())
+		{
 
 			$this->_unset();	
 		}
 
-		if($this->file_pointer){
-
+		if($this->file_pointer)
+		{
 			return fclose($this->file_pointer);
-
 		}
 	}
 
-	protected function set($file){
-
-		if(is_string($file)){
-
+	protected function set($file)
+	{
+		if(is_string($file))
+		{
 			$file       = trim($file);
 			$this->file = $file;
 		}		
 	}
 
-	protected function _unset(){
-
+	protected function _unset()
+	{
 		$this->file = '';
-
 	}
 
-	protected function open(){
-
+	protected function open()
+	{
 		$file = $this->get_file();
 
-		if(!empty($file) && file_exists($file) ){
-
+		if(!empty($file) && file_exists($file) )
+		{
 			$this->file_pointer = fopen($file, 'r');
 			return true;
 		}
@@ -106,5 +103,3 @@ class FileReader{
 		return false;
 	}
 }
-
-?>

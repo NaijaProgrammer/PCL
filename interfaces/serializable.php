@@ -1,8 +1,8 @@
 <?php
-namespace PHPUtil\interfaces;
+namespace pcl\interfaces;
 
-interface Serializable {
-
+interface Serializable 
+{
 	function serialize();
 	function unserialize($serialized_obj);
 

@@ -2,12 +2,15 @@
 
 require_once('file_reader.class.php');
 
-class FileDownloader extends FileReader{
-
-	public function download(){
-
-   		if ($this->is_readable()) {
-
+/*
+* @author Michael Orji
+*/
+class FileDownloader extends FileReader
+{
+	public function download()
+	{
+   		if ($this->is_readable()) 
+		{
 			$file = $this->get_file();
 
     			header('Content-Description: File Transfer');
@@ -22,5 +25,3 @@ class FileDownloader extends FileReader{
  		return false;
 	}
 }
-
-?>

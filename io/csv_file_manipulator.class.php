@@ -1,5 +1,8 @@
 <?php
 
+/*
+* @author Michael Orji
+*/
 class CsvFileManipulator
 {
 	private $upload_file_field_name;
@@ -57,5 +60,3 @@ class CsvFileManipulator
 	}
 
 }
-
-?>

@@ -4,19 +4,20 @@
 //require_once('file_writer.class.php');
 //require_once('../util/directory_manager.class.php');
 
-class FileManipulator{
-
-
-	public static function read_and_write($source, $destination, $length = 0){
-
+/*
+* @author Michael Orji
+*/
+class FileManipulator
+{
+	public static function read_and_write($source, $destination, $length = 0)
+	{
 		$src  = new FileReader($source);
 		$dest = new FileWriter($destination);
 
-		while(!feof($src->get_file_pointer())){
-
+		while(!feof($src->get_file_pointer()))
+		{
 			$dest->write( $src->read($length) );
 		}
-
 	}
 
 	/*
@@ -27,40 +28,42 @@ class FileManipulator{
 	* @date: 26 sept, 2010
 	* @time: 12:57
 	*/
-	public static function create_unique_filename($file_name, $dir = ""){
-
+	public static function create_unique_filename($file_name, $dir = "")
+	{
 		$counter = 0;
 		$filename = pathinfo($file_name, PATHINFO_FILENAME);
 		$extension = pathinfo($file_name, PATHINFO_EXTENSION);
 		$tmp_filename = pathinfo($file_name, PATHINFO_FILENAME);
 
-   		if("" != $dir){
+   		if("" != $dir)
+		{
    			$dir = DirectoryManipulator::create_directory($dir);
    		}
 
 		$handle = opendir($dir);
 
-   		if(!empty($handle)){
+   		if(!empty($handle))
+		{
+      		while($f = readdir($handle))
+			{
+       			$fname = pathinfo($f, PATHINFO_FILENAME);
 
-      			while($f = readdir($handle)){
-
-       				$fname = pathinfo($f, PATHINFO_FILENAME);
-
-         			if($filename == $fname){
-          				$counter++;
-          				$filename = $tmp_filename. $counter;
-         			}
-      			}
+         		if($filename == $fname)
+				{
+          			$counter++;
+          			$filename = $tmp_filename. $counter;
+         		}
+      		}
    		}
 
-     		return ($extension) ? $filename. '.'. $extension : $filename;
+     	return ($extension) ? $filename. '.'. $extension : $filename;
 	}
 
 	//Call this function with argument = absolute path of file or directory name.
 	public static function compress_file($src, $new_name = '')
 	{
-
-        	if(substr($src,-1)==='/'){
+        	if(substr($src,-1)==='/')
+			{
          		$src=substr($src,0,-1);
         	}
 
@@ -74,26 +77,30 @@ class FileManipulator{
         	$zip = new ZipArchive;
         	$res = $zip->open($filename, ZipArchive::CREATE);
 
-        	if($res !== TRUE){
+        	if($res !== TRUE)
+			{
            		echo 'Error: Unable to create zip file';
            		exit;
         	}
 
-        	if(is_file($src)){
+        	if(is_file($src))
+			{
          		$zip->addFile($src);
         	}
 
-        	else{
+        	else
+			{
 
-                	if(!is_dir($src)){
-                     		$zip->close();
-                     		@unlink($filename);
-                     		echo 'Error: File not found';
-                     		exit;
-			}
+                if(!is_dir($src))
+				{
+                    $zip->close();
+                    @unlink($filename);
+                    echo 'Error: File not found';
+                    exit;
+				}
 
          		self::recurse_zip($src, $zip);
-		}
+			}
 
         	$zip->close();
         	header("Location: $filename");
@@ -102,24 +109,24 @@ class FileManipulator{
 
 	protected static function recurse_zip($src, &$zip) 
  	{
+        $dir = opendir($src);
 
-        	$dir = opendir($src);
+        while(false !== ( $file = readdir($dir)) ) 
+		{
 
-        	while(false !== ( $file = readdir($dir)) ) {
-
-            		if (( $file != '.' ) && ( $file != '..' )){
-
-                		if ( is_dir($src . '/' . $file) ) {
-                    			self::recurse_zip($src . '/' . $file, $zip);
+            		if (( $file != '.' ) && ( $file != '..' ))
+					{
+                		if ( is_dir($src . '/' . $file) ) 
+						{
+                    		self::recurse_zip($src . '/' . $file, $zip);
                 		}
-                		else {
-                    			$zip->addFile($src . '/' . $file);
+                		else 
+						{
+                    		$zip->addFile($src . '/' . $file);
                 		}
             		}
-        	}
+        }
 
-        	closedir($dir);
+        closedir($dir);
 	}
 }
-
-?>

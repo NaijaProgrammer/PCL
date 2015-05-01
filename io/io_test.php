@@ -14,23 +14,22 @@ require_once('file_uploader.class.php');
 //$downloadable->download();
 //FileManager::read_and_write('file_manager.class.php', 'file_manager_copy.txt', $length = 20);
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+{
 
 	$uploader = new FileUploader( array('file'=>$_FILES['upload_file'], 'upload_directory'=>'uploads/images/', 'allowed_mime_types'=>array(), 'allowed_extensions'=>array('jpg', 'gif', 'png')) );
 	$uploader->upload();
 
-	if($uploader->get_error_code() > 0){
-
+	if($uploader->get_error_code() > 0)
+	{
 		echo $uploader->get_error_message();
-
 	}
 
-	else{
-
+	else
+	{
 		echo 'File Path: '. $uploader->get_uploaded_file_path(). '<br/>';
 		echo 'File Name: '. $uploader->get_uploaded_file_name(). '<br/>';
 		echo 'File Ext : '. $uploader->get_uploaded_file_extension(). '<br/>';
-
 	}
 
 }

@@ -1,12 +1,11 @@
 <?php
 
-//require_once('file_manipulator.class.php');
-//require_once('../util/file_inspector.class.php');
-//require_once('../util/array_manipulator.class.php');
-//require_once('../util/directory_manager.class.php');
-
-class FileUploader{
-
+/*
+* @author Michael Orji
+* @dependencies: file-manipulator.class.php, util/file-inspector.class.php, util/array-manipulator.class.php, util/directory-manager.class.php
+*/
+class FileUploader
+{
 	private $file               = NULL;
 	private $upload_directory   = '';
 	private $allowed_mime_types = array();
@@ -18,8 +17,8 @@ class FileUploader{
        	private $uploaded_filename       = ''; 
        	private $uploaded_file_extension = '';
 
-	public function __construct($params){
-
+	public function __construct($params)
+	{
 		$default_opts = array('file'=>NULL, 'upload_directory'=>'uploads/', 'allowed_mime_types'=>array(), 'allowed_extensions'=>array());
 		$setup_opts   = ArrayManipulator::copy_array($default_opts, $params);
 
@@ -29,61 +28,57 @@ class FileUploader{
 		$this->set_allowed_extensions($setup_opts['allowed_extensions']);
 	}
 
-	public function set_file($file){
-
-		if(is_uploaded_file($file['tmp_name']) ) { //make sure file was uploaded via HTTP POST
-
+	public function set_file($file)
+	{
+		//make sure file was uploaded via HTTP POST
+		if(is_uploaded_file($file['tmp_name']) )
+		{ 
 			$this->file = $file;
-
    		}	
 	}
 
-	public function get_file_to_upload(){
-
+	public function get_file_to_upload()
+	{
 		return $this->file;
-
 	}
 
-	public function set_upload_directory($dir_name){
-
-		if(!empty($dir_name)){
-
-			if(!is_dir($dir_name)){
-
+	public function set_upload_directory($dir_name)
+	{
+		if(!empty($dir_name))
+		{
+			if(!is_dir($dir_name))
+			{
 				DirectoryManipulator::create_directory($dir_name);
-
 			}
 			
 			$this->upload_directory = $dir_name;
 		}
 	}
 
-	public function get_upload_directory(){
-
+	public function get_upload_directory()
+	{
 		return $this->upload_directory;
-
 	}
 
-	public function set_allowed_mime_types($mime_types){
-
-		if(is_string($mime_types)){
-
+	public function set_allowed_mime_types($mime_types)
+	{
+		if(is_string($mime_types))
+		{
 			$mime_types = explode(',', $mime_types);
 		}
 
 		$this->allowed_mime_types = ( is_array($mime_types) ? $mime_types : array() );
 	}
 
-	public function get_allowed_mime_types(){
-
+	public function get_allowed_mime_types()
+	{
 		return $this->allowed_mime_types;
-
 	}
 
-	public function set_allowed_extensions($extensions){
-
-		if(is_string($extensions)){
-
+	public function set_allowed_extensions($extensions)
+	{
+		if(is_string($extensions))
+		{
 			$extensions = explode(',', $extensions);
 		}
 
@@ -91,26 +86,23 @@ class FileUploader{
 
 	}
 
-	public function get_allowed_extensions(){
-
-
+	public function get_allowed_extensions()
+	{
 		return $this->allowed_extensions;
 	}
 
-	public function get_error_code(){
-
+	public function get_error_code()
+	{
 		return $this->error_code;
-
 	}
 
-	public function get_error_message(){
-
+	public function get_error_message()
+	{
 		return $this->error_message;
-
 	}
 
-	public function set_configurations($config_array){
-
+	public function set_configurations($config_array)
+	{
 		$default_config = array(
 					'safe_mode'=>'off', 'max_execution_time'=>'1000', 'max_input_time'=>'1000', 'register_argc_argv'=>'On',  
 					'open_basedir'=>'', 'upload_max_filesize'=>'200M', 'post_max_size'=>'200M'
@@ -118,46 +110,44 @@ class FileUploader{
 
 		$setup_config = ArrayManipulator::copy_array($default_config, $config_array);
 
-		foreach($setup_config AS $key => $value){
-
+		foreach($setup_config AS $key => $value)
+		{
 			ini_set($key, $value);
-
 		}	
 	}
 
-	public function get_uploaded_file_name(){
-
+	public function get_uploaded_file_name()
+	{
 		return $this->uploaded_filename;
 	}
 
-	public function get_uploaded_file_extension(){
-
+	public function get_uploaded_file_extension()
+	{
 		return $this->uploaded_file_extension;
-
 	}
 
-	public function get_uploaded_file_path(){
-
+	public function get_uploaded_file_path()
+	{
 		return $this->uploaded_file_path;
 	}	
 
-	public function upload(){ 
-
+	public function upload()
+	{ 
 		$current_file = $this->get_file_to_upload();
 
-		if(!$current_file || !$this->is_valid_file_type()){
-			
+		if(!$current_file || !$this->is_valid_file_type())
+		{
 			$this->error_code    = 5;
-    			$this->error_message = "Invalid file type";
+    		$this->error_message = "Invalid file type";
 			return;
    		}
 
-		if ($current_file['error'] > 0) { 
-
+		if ($current_file['error'] > 0)
+		{ 
        			$this->error_code    = $current_file['error'];
        			$this->error_message = $this->upload_error_message($current_file['error']); 
        			return;
-      		}
+      	}
 
 		$destination_dir   = $this->get_upload_directory();
 		$file_properties   = FileInspector::get_file_properties($current_file);
@@ -167,31 +157,32 @@ class FileUploader{
  		$filename          = FileInspector::get_file_name($unique_name); //$file_parts[0];
  		$final_destination = $destination_dir. $unique_name;
 
-      		if (move_uploaded_file($current_file['tmp_name'], $final_destination)) {
-
-			$this->uploaded_file_path      = $final_destination;
+      		if (move_uploaded_file($current_file['tmp_name'], $final_destination)) 
+			{
+				$this->uploaded_file_path      = $final_destination;
        			$this->uploaded_filename       = $filename; 
        			$this->uploaded_file_extension = $file_extension;               
       		} 
                     
-      		if (file_exists($current_file['tmp_name']) && is_file($current_file['tmp_name'])){
+      		if (file_exists($current_file['tmp_name']) && is_file($current_file['tmp_name']))
+			{
        			unlink($current_file['tmp_name']);
       		}
 	} 
 
 	
-	protected function is_valid_file_type(){
-
+	protected function is_valid_file_type()
+	{
 		$file = $this->get_file_to_upload();
 
  		return ( in_array(FileInspector::get_file_mime_type($file), $this->get_allowed_mime_types()) || in_array(FileInspector::get_file_extension($file), $this->get_allowed_extensions()) );
 	} 
 
 	
-	protected function upload_error_message($error_code){
-
-   		switch ($error_code) {
-
+	protected function upload_error_message($error_code)
+	{
+   		switch ($error_code) 
+		{
     			case 1:  return "File size exceeds the upload_max_filesize setting in php.ini";
     			case 2:  return "Fiie size exceeds the MAX_FILE_SIZE setting in the HTML form";
     			case 3:  return "File was only partially uploaded";
@@ -203,5 +194,3 @@ class FileUploader{
    		} 
 	}
 }
-
-?>
