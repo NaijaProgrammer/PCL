@@ -1,5 +1,8 @@
 <?php
 
+/*
+* @author Michael Orji
+*/
 class FileReader
 {
 	private $file         = '';
@@ -65,7 +68,6 @@ class FileReader
 	{
 		if($kill && $this->get_file())
 		{
-
 			$this->_unset();	
 		}
 
@@ -99,7 +101,7 @@ class FileReader
 			return true;
 		}
 
-		echo '<p>Error!!! Unable to locate File : '. $file. ' </p>';
+		die('<p>Error!!! Unable to locate File : '. $file. ' </p>');
 		return false;
 	}
 }

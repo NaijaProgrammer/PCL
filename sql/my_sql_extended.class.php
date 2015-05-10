@@ -146,8 +146,6 @@ class MySqlExtended extends MySql
 		//@mysql_query("source $file_path");
 		//$this->execute_query("source $file_path");
 		
-		/** @credits: http://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php */
-		
 		// Temporary variable, used to store current query
 		$templine = '';
 		
@@ -179,5 +177,3 @@ class MySqlExtended extends MySql
 		$this->execute_sql_file($file_path); 
 	}
 }
-
-?>

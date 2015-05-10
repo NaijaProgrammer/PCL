@@ -5,7 +5,7 @@ require_once('util/string_manipulator.class.php');
 
 $current_script_paths = UrlInspector::get_path(dirname($_SERVER['SCRIPT_FILENAME'])); //get paths to currently executing script
 
-defined("PCL_DIR") or define("PCL_DIR", str_replace( '\\', '/', dirname(__FILE__) ). '/');  //file path to PHPUtil
+defined("PCL_DIR") or define("PCL_DIR", str_replace( '\\', '/', dirname(__FILE__) ). '/');  //file path to the simple php class library
 defined("CURRENT_SCRIPT_FILE_PATH") or define("CURRENT_SCRIPT_FILE_PATH", substr($current_script_paths['dir_path'], 0, -1)); //file system (directory) path to currently executing script
 defined("CURRENT_SCRIPT_HTTP_PATH") or define("CURRENT_SCRIPT_HTTP_PATH", substr($current_script_paths['http_path'], 0, -1)); //http path to currently executing script (available only if currently executing script is located inside the web root folder or any of its directories)
 
@@ -44,5 +44,3 @@ function($class_name)
 
 	return false; 
 } );
-
-?>

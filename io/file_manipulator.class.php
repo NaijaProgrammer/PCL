@@ -1,11 +1,8 @@
 <?php
 
-//require_once('file_reader.class.php');
-//require_once('file_writer.class.php');
-//require_once('../util/directory_manager.class.php');
-
 /*
 * @author Michael Orji
+* @dependencies: FileReader, FileWriter, DirectoryManager
 */
 class FileManipulator
 {

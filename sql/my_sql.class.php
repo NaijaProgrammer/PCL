@@ -1,10 +1,13 @@
 <?php
 /**
-* Database management / access class: basic abstraction
 *
-* @author Michael Peacock
-* @Modified: Michael Orji
+* @author: Michael Orji
+*
+* @adapted from Database management / access class by Michael Peacock
+* @link PHP5 Social Networking
 * @version 1.0
+*
+* @dependencies: util/DataSanitizer
 */
 class MySql
 {
@@ -238,7 +241,7 @@ class MySql
 	* For example, say we want to run an insert query: $this->insert {table_name}, $data), where data has the following members
 	* $data['firsntame'] => 'Michael'
 	* $data['lastname'] = 'Orji'
-	* $data['date_added'] = $this->set_sql_term('CURDATE()')
+	* $data['date_added'] = $this->sql_term('CURDATE()')
 	* would generate the following sql query: 
 	* INSERT INTO { $table_name } ('firstname', 'lastname', 'date_added') 
 	* VALUES ( 'Michael', 'Orji', CURDATE() )
@@ -451,4 +454,3 @@ class MySql
       	}
    	}
 }
-?>

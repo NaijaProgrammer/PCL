@@ -1,6 +1,6 @@
 <?php
 
-require_once('template_loader.class.php');
+//require_once('template_loader.class.php');
 
 Class RegistryTemplateLoader extends TemplateLoader 
 {
@@ -28,5 +28,3 @@ Class RegistryTemplateLoader extends TemplateLoader
 		return $tpl;
 	}
 }
-
-?>

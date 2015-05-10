@@ -1,10 +1,11 @@
 <?php
-
-class MultimediaInspector(){
-
-
-	function get_media_duration($media_file, $path_to_ffmpeg){
- 
+/*
+* @author Michael Orji
+*/
+class MultimediaInspector()
+{
+	function get_media_duration($media_file, $path_to_ffmpeg)
+	{
  		ob_start();
  		passthru($path_to_ffmpeg."ffmpeg -i $media_file 2>&1"); 
  		$return_string = ob_get_contents(); 
@@ -23,5 +24,3 @@ class MultimediaInspector(){
  		return $duration;
 	}
 }
-
-?>

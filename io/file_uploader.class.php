@@ -2,7 +2,7 @@
 
 /*
 * @author Michael Orji
-* @dependencies: file-manipulator.class.php, util/file-inspector.class.php, util/array-manipulator.class.php, util/directory-manager.class.php
+* @dependencies: FileManipulator, FileInspector, util/ArrayManipulator, util/DirectoryManager
 */
 class FileUploader
 {

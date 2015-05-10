@@ -1,6 +1,10 @@
 <?php
 
-require_once('template.class.php');
+//require_once('template.class.php');
+
+/*
+* @author Michael Orji
+*/
 
 Class TemplateLoader  
 {
@@ -41,9 +45,9 @@ Class TemplateLoader
  	* @param mixed $value
  	* @return void
  	*/
- 	public function __set($index, $value){
-
-        	$this->vars[$index] = $value;
+ 	public function __set($index, $value)
+	{
+        $this->vars[$index] = $value;
  	}
 
 
@@ -76,5 +80,3 @@ Class TemplateLoader
 		echo $template->output();
 	}
 }
-
-?>

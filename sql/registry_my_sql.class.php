@@ -15,14 +15,10 @@ class RegistryMySql extends MySqlExtended{
 	/**
 	* Construct our database object
 	*/
-	public function __construct($registry_object, $host='', $user='', $password='', $database=''){
-
+	public function __construct($registry_object, $host='', $user='', $password='', $database='')
+	{
 		$this->registry = $registry_object;
 		return parent::get_instance($host, $user, $password, $database);
 		//return $this->get_instance($host, $user, $password, $database);
-
 	}
 }
-
-
-?>

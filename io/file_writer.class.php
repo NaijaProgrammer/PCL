@@ -1,5 +1,8 @@
 <?php
 
+/**
+* @author Michael Orji
+*/
 class FileWriter
 {
 	private $file         = '';
