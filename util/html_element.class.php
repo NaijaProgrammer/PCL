@@ -1,5 +1,9 @@
 <?php
-class HtmlElement{
+/*
+* @dependencies: ArrayManipulator, DateManipulator
+*/
+class HtmlElement
+{
 
 	/**
 	* @params: array
@@ -13,8 +17,8 @@ class HtmlElement{
 	* 5. convert_keyed_value_to_text [boolean] whether or not to convert the array's keys to the array's values and use these values as the display texts    of  the select element, while still using the array's keys as the select element's index(value); This applies in cases where the array's values are numeric and enables us to specify the '$use_only_values' option as true, and still be able to use these values as the select element options's indexes while having a meaningful text (obtained by a user defined conversion function) as the display text, for e.g in birthday requiring numeric values as the index of the month and text values as the display text as in the 'birthday_builder.php' script
 	* 6. conversion_function [string] used in conjunction with $convert_keyed_value_to_text; a pointer to, or a string representing, the name of the function to use  in converting an array's numeric values to a printable representation/format
 	**/
-	public static function build_select_options( $supplied_options = array() ){
-	
+	public static function build_select_options( $supplied_options = array() )
+	{
 		$default_options = array(
 									'options'                     => array(),
 									'default_selected_text'       => '', 
@@ -38,28 +42,32 @@ class HtmlElement{
 
 		$options_array_len = count($options_array);
    
-		if($options_array_len > 0){
-
-			foreach($options_array as $key => $value){
-
-				if($use_values_only == true){
-
-					if($convert_keyedValue2text == true){
+		if($options_array_len > 0)
+		{
+			foreach($options_array as $key => $value)
+			{
+				if($use_values_only == true)
+				{
+					if($convert_keyedValue2text == true)
+					{
 						$options.= '<option value="'. $value. '">'. $conversion_function($value). '</option>';       
 					}
        
-					else{
+					else
+					{
 						$options.= '<option value="'. $value. '">'. $value. '</option>';
 					}       
 				}
 
-				else if($use_values_only == false){
-
-					if(is_numeric($key) && array_key_exists(0, $options_array)){
+				else if($use_values_only == false)
+				{
+					if(is_numeric($key) && array_key_exists(0, $options_array))
+					{
 						$use_key = $key+1;
 					}
          
-					else{
+					else
+					{
 						$use_key = $key;
 					}
 
@@ -71,8 +79,8 @@ class HtmlElement{
 		return $options;
 	}
 
-	public static function build_select($params = array(), $options_array = array()){
-
+	public static function build_select($params = array(), $options_array = array())
+	{
 		$select_name  = $params['select_name'];
 		$select_id    = $params['select_id'];
 		$label_for    = $params['label_for'];
@@ -81,7 +89,8 @@ class HtmlElement{
 		$options      = isset($params['options']) ? $params['options'] : ( !empty($options_array) ? self::build_select_options($options_array) : '' );
 		$select       = "";
 
-		if(!empty($label_for) && !empty($label_text)){
+		if(!empty($label_for) && !empty($label_text))
+		{
 			$select.= '<label for="'. $label_for. '">'. $label_text. '</label>';
 		}
     
@@ -93,8 +102,8 @@ class HtmlElement{
 		return $select;
 	}
 	
-	public static function build_day_options($opts = array()){
-	
+	public static function build_day_options($opts = array())
+	{
 		$selected_day          = isset($opts['selected_day'])          ? $opts['selected_day'] :  -1;
 		$opening_selected_text = isset($opts['opening_selected_text']) ? $opts['opening_selected_text'] : 'Day';
 	
@@ -105,17 +114,20 @@ class HtmlElement{
 		$bd_params['convert_keyed_value_to_text'] = false;
 		$bd_params['conversion_function']         = '';
 		
-		if(intval($selected_day) <= 0){
+		if(intval($selected_day) <= 0)
+		{
 			$bd_params['default_selected_text']  = $opening_selected_text;
 			$bd_params['default_selected_value'] = $selected_day;
 		}
 		return self::build_select_options($bd_params);
 	}
 	
-	public static function build_month_options($opts = array()){
-	
-		if(!function_exists('month_int_to_month_str')){
-			function month_int_to_month_str($month){
+	public static function build_month_options($opts = array())
+	{
+		if(!function_exists('month_int_to_month_str'))
+		{
+			function month_int_to_month_str($month)
+			{
 				return DateManipulator::month_int_to_month_str($month);
 			}
 		}
@@ -130,7 +142,8 @@ class HtmlElement{
 		$bm_params['default_selected_text']       = $bm_params['conversion_function']($selected_month);
 		$bm_params['default_selected_value']      = $selected_month;
 
-		if(intval($selected_month) <= 0){
+		if(intval($selected_month) <= 0)
+		{
 			$bm_params['default_selected_text']  = $opening_selected_text;
 			$bm_params['default_selected_value'] = $selected_month;
 		}
@@ -138,8 +151,8 @@ class HtmlElement{
 		return self::build_select_options($bm_params);
 	}
 	
-	public static function build_year_options($opts = array()){
-
+	public static function build_year_options($opts = array())
+	{
 		$selected_year         = isset($opts['selected_year'])         ? $opts['selected_year'] :  -1;
 		$opening_selected_text = isset($opts['opening_selected_text']) ? $opts['opening_selected_text'] : 'Year';
 		
@@ -150,7 +163,8 @@ class HtmlElement{
 		$bd_params['convert_keyed_value_to_text'] = false;
 		$bd_params['conversion_function']         = '';
 
-		if(intval($selected_year) <= 0){
+		if(intval($selected_year) <= 0)
+		{
 			$by_params['default_selected_text']  = $opening_selected_text;
 			$by_params['default_selected_value'] = $selected_year;
 		}
@@ -170,7 +184,8 @@ class HtmlElement{
 		$bm_params['default_selected_text']       = $selected_hour;
 		$bm_params['default_selected_value']      = $selected_hour;
 
-		if(intval($selected_hour) <= 0){
+		if(intval($selected_hour) <= 0)
+		{
 			$bm_params['default_selected_text']  = $opening_selected_text;
 			$bm_params['default_selected_value'] = $selected_hour;
 		}
@@ -179,10 +194,12 @@ class HtmlElement{
 	
 	}
 	
-	public static function build_minute_options($opts = array()){
-	
-		if(!function_exists('add_zero_to_int_less_than_ten')){
-			function add_zero_to_int_less_than_ten($num){
+	public static function build_minute_options($opts = array())
+	{
+		if(!function_exists('add_zero_to_int_less_than_ten'))
+		{
+			function add_zero_to_int_less_than_ten($num)
+			{
 				return $num < 10 ? "0". $num : $num;
 			}
 		}
@@ -197,7 +214,8 @@ class HtmlElement{
 		$bm_params['default_selected_text']       = add_zero_to_int_less_than_ten($selected_minute);
 		$bm_params['default_selected_value']      = $selected_minute;
 
-		if(intval($selected_minute) < 0){
+		if(intval($selected_minute) < 0)
+		{
 			$bm_params['default_selected_text']  = $opening_selected_text;
 			$bm_params['default_selected_value'] = $selected_minute;
 		}
@@ -231,4 +249,3 @@ class HtmlElement{
 	*/
 	
 }
-?>

@@ -8,8 +8,14 @@ class DataSanitizer
 {
 	public static function sanitize_data_for_db_query($data, $allowed_tags = "")
 	{
-		if(is_object($data)){ return $data; }
-		if(is_array($data)){ return $data; }
+		if(is_object($data))
+		{ 
+			return $data; 
+		}
+		if(is_array($data))
+		{ 
+			return $data; 
+		}
 
 		return is_numeric($data) ? self::_sanitize_integer($data) : self::_sanitize_string_for_db_query($data, $allowed_tags);  
 	}
@@ -106,5 +112,3 @@ class DataSanitizer
 		return intval($int);
 	}
 }
-
-?>

@@ -1,9 +1,10 @@
 <?php
-if(!class_exists('StringManipulator'))
-{
+
+/*
+* @author Michael Orji
+*/
 class StringManipulator
 {
-
 	/*
 	* A string hashing function
 	* @author: michael orji
@@ -15,9 +16,6 @@ class StringManipulator
 	{
  		return $hash_algorithm($string);
 	}
-
-
-	/* from the php anthology: vol ||*/
 
 	/**
 	* Creates a random string
@@ -39,14 +37,12 @@ class StringManipulator
 
  		return $randString;
 	}
-
 	
 	public static function set_displayed_text_length($text, $max_length, $fill_chars = '...')
 	{
  		$displayedText = ( substr($text, 0, $max_length) . ( strlen($text) > $max_length ? $fill_chars : '') );
  		return $displayedText;
 	}
-
 
 	/**
 	* returns the last character in a string
@@ -58,20 +54,10 @@ class StringManipulator
 	}
 
 	/**
-	* @credits: http://stackoverflow.com/questions/2814880/how-to-check-if-letter-is-upper-or-lower-in-php
 	* @date: Feb. 7, 2013
 	*/
 	public static function is_upper_case($char)
 	{
-
-		/*
-		if(ctype_upper($w{0}) {
-
-			return true;
-		}
-
-		return false;
-		*/
 		return ( $char === strtoupper($char) );
 	}
 
@@ -84,5 +70,3 @@ class StringManipulator
 		return mb_strtolower($chr, "UTF-8") != $chr;
 	}
 }
-}
-?>

@@ -1050,7 +1050,5 @@
 		    elseif( stripos($this->_agent, 'win') !== false ) {
 			    $this->_platform = self::PLATFORM_WINDOWS;
 		    }
-
 	    }
     }
-?>

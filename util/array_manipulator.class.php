@@ -1,9 +1,10 @@
 <?php
 
-//namespace PHPUtil\util;
-
-class ArrayManipulator{
-
+/*
+* @author Michael Orji
+*/
+class ArrayManipulator
+{
 	/* 
 	* A function that loops through the [N][named_element] element 
 	* of a matrix to determine if a given vaulue ($search_value) exitsts
@@ -15,19 +16,21 @@ class ArrayManipulator{
 	*
 	*******************************************************************************/
 
-	public static function in_matrix($search_value, $matrix, $named_element){
-
+	public static function in_matrix($search_value, $matrix, $named_element)
+	{
  		$matrix_length = count($matrix);
 
    		/* check to make sure we're not dealing with an empty matrix */
-   		if($matrix_length > 0){
+   		if($matrix_length > 0)
+		{
+      		for($i = 0; $i < $matrix_length; $i++)
+			{
 
-      			for($i = 0; $i < $matrix_length; $i++){
-
-         			if(trim($matrix[$i][$named_element]) == trim($search_value)){
-          				return true;
-         			}
-      			}
+         		if(trim($matrix[$i][$named_element]) == trim($search_value))
+				{
+          			return true;
+         		}
+      		}
    		}
 
 		return false;
@@ -104,6 +107,4 @@ class ArrayManipulator{
 		}
 		return NULL;
 	}
-} 
-
-?>
+}

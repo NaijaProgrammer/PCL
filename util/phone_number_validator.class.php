@@ -10,5 +10,3 @@ class PhoneNumberValidator extends Validator
 		return preg_match( "^([0-9]){5,15}^", $number );
 	}
 }
-
-?>

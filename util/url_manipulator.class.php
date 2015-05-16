@@ -14,15 +14,13 @@ class UrlManipulator
 
    		if( is_numeric($delay) && (intval($delay) > 0) )
 		{
-    			header("Refresh: $delay; url=$location");
-    			print '<p>'. $message. '</p>';
+    		header("Refresh: $delay; url=$location");
+    		print '<p>'. $message. '</p>';
    		} 
    		else
 		{
-    			header("location: $location");
+    		header("location: $location");
    		}
  		exit();
 	}
 }
-
-?>

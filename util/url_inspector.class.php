@@ -1,24 +1,20 @@
 <?php
-if(!class_exists('UrlInspector'))
-{
+
+/*
+* @author Michael Orji
+*
+* @dependencies StringManipulator
+*/
 class UrlInspector
 { 
 	public static function get_base_url()
     {
-        	//return self::get_server_protocol(). 'localhost:81';
-			if(strpos(getcwd(), '/home/travelpaddy/public_html/Beta') !== false )
-			{
-				return self::get_server_protocol(). $_SERVER['HTTP_HOST']. '/Beta';
-			}
-		
-			return self::get_server_protocol(). $_SERVER['HTTP_HOST'];
+		return self::get_server_protocol(). $_SERVER['HTTP_HOST'];
     }
 	
 	/**
-	* @credits: http://stackoverflow.com/questions/16027102/get-domain-name-from-full-url
 	* @date; Jan. 8, 2014
 	*/
-
 	public static function get_domain_from_subdomain_url($url)
 	{
 		$pieces = parse_url($url);
@@ -32,48 +28,32 @@ class UrlInspector
 
 	public static function get_server_protocol()
 	{
-		//$protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, 5)) == 'https://' ? 'https://' : 'http://';
 		//$protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, 5)) == 'https' ? 'https://' : 'http://';
 		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != "off") ? "https://" : "http://";
-		
-		/*
-		* @credits: http://stackoverflow.com/questions/17201170/php-how-to-get-the-base-domain-url
-		if(isset($_SERVER['HTTPS']))
-		{
-			$protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https://" : "http://";
-		}
-		else
-		{
-			$protocol = 'http://';
-		}
-		*/
-		
+
 		return $protocol;
-		
 	}
 	
-
-
 	/*
 	* @date: 28 August, 2012
 	*/
-	public static function get_path($current_file){ 
-
+	public static function get_path($current_file)
+	{ 
  		$docroot = $_SERVER['DOCUMENT_ROOT'];
  		$p = $current_file; //this gets the path to the application's folder from this file, irrespective of whatever page it is included in, this way, we get the path to the application folder consistently
  		$rep = str_replace("\\", "/", $p);
 		
 		
-   		if(StringManipulator::get_last_character_in_string($docroot) == '/'){
-		 
-    			$cut = substr($rep, strlen($docroot)-1, strlen($rep));
+   		if(StringManipulator::get_last_character_in_string($docroot) == '/')
+		{
+    		$cut = substr($rep, strlen($docroot)-1, strlen($rep));
    		}
 
-   		else{
-    			$cut = substr($rep, strlen($docroot), strlen($rep));
+   		else
+		{
+    		$cut = substr($rep, strlen($docroot), strlen($rep));
    		}
 		
- 		//$ahp = 'http://'. $_SERVER['HTTP_HOST'] . $cut . '/';
 		$ahp = self::get_server_protocol(). $_SERVER['HTTP_HOST'] . $cut . '/';
  		$adp = $rep. '/';
 
@@ -88,26 +68,29 @@ class UrlInspector
 	/*
 	* @date: Nov. 2, 2012
 	*/
-	public static function get_referrer_page($strip_query_string = false, $incoming_key = '', $arr_of_keys_to_strip = array()){
-
+	public static function get_referrer_page($strip_query_string = false, $incoming_key = '', $arr_of_keys_to_strip = array())
+	{
  		$page = isset($_SERVER['HTTP_REFERER']) ? trim($_SERVER['HTTP_REFERER']) : self::get_current_page(true);
 
-   		if(!self::url_contains_query_string($page)){
+   		if(!self::url_contains_query_string($page))
+		{
    			return $page;
    		}
 
-   		if($strip_query_string){
-    			$page = substr($page, 0, strpos($page, '?') );
+   		if($strip_query_string)
+		{
+    		$page = substr($page, 0, strpos($page, '?') );
    		}
 
-   		else{
-
-      			foreach($_GET AS $key => $value){
-         		
-         			if( ($key != $incoming_key) && (!in_array($key, $arr_of_keys_to_strip)) ){
-          				$page .= "&". $key. "=". urlencode($value);
-         			}
-      			}
+   		else
+		{
+      		foreach($_GET AS $key => $value)
+			{
+         		if( ($key != $incoming_key) && (!in_array($key, $arr_of_keys_to_strip)) )
+				{
+          			$page .= "&". $key. "=". urlencode($value);
+         		}
+      		}
    		}
 
  		return $page;
@@ -126,30 +109,33 @@ class UrlInspector
 	/*
 	*@date: 4 August, 2012
 	*/
-	public static function get_current_page($include_query_string = false, $incoming_key = '', $arr_of_keys_to_strip = array()){
-
+	public static function get_current_page($include_query_string = false, $incoming_key = '', $arr_of_keys_to_strip = array())
+	{
  		$qs          = '';
  		$curr_script = $_SERVER['PHP_SELF'];
  		$filename    = substr($curr_script, strrpos($curr_script, '/')+1 );
 
-   		if($filename == 'index.php'){
-     			$filename = self::get_current_base_path();
+   		if($filename == 'index.php')
+		{
+     		$filename = self::get_current_base_path();
    		}
 
-   		else{
-    			$filename = self::get_current_base_path(). $filename;
+   		else
+		{
+    		$filename = self::get_current_base_path(). $filename;
    		}
  
-   		if($include_query_string){
+   		if($include_query_string)
+		{
+    		$qs  = '?s='. time(uniqid());
 
-    			$qs  = '?s='. time(uniqid());
-
-      			foreach($_GET AS $key => $value){
-        
-         			if( ($key != 's') && ($key != $incoming_key) && (!in_array($key, $arr_of_keys_to_strip)) ){
-          				$qs .= "&". $key. "=". urlencode($value);
-         			}
-      			}
+      		foreach($_GET AS $key => $value)
+			{
+         		if( ($key != 's') && ($key != $incoming_key) && (!in_array($key, $arr_of_keys_to_strip)) )
+				{
+          			$qs .= "&". $key. "=". urlencode($value);
+         		}
+      		}
    		}
  
  		return self::get_server_protocol(). $_SERVER['HTTP_HOST']. $filename. $qs;
@@ -175,16 +161,13 @@ class UrlInspector
 	
 	public static function url_file_found($file_path)
 	{
-   		if(@file_get_contents($file_path))
+   		if(file_get_contents($file_path))
 		{
-     			return true;
+     		return true;
    		}
  		return false;
 	}
 
-	/*
-	* @credits: http://w-shadow.com/blog/2007/08/02/how-to-check-if-page-exists-with-curl/
-	*/
 	public static function url_exists($url)
 	{
   		$parts=parse_url($url);
@@ -204,7 +187,7 @@ class UrlInspector
  
   		/* 
 		* timeout after the specified number of seconds. assuming that this script runs 
-    		* on a server, 20 seconds should be plenty of time to verify a valid URL.  
+    	* on a server, 20 seconds should be plenty of time to verify a valid URL.  
 		*/
   		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
   		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
@@ -214,7 +197,8 @@ class UrlInspector
   		curl_setopt($ch, CURLOPT_HEADER, true);
  
   		/* handle HTTPS links */
-  		if($parts['scheme']=='https'){
+  		if($parts['scheme']=='https')
+		{
   			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  1);
   			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
   		}
@@ -223,10 +207,12 @@ class UrlInspector
  		curl_close($ch);
  
   		/*  get the status code from HTTP headers */
-  		if(preg_match('/HTTP\/1\.\d+\s+(\d+)/', $response, $matches)){
+  		if(preg_match('/HTTP\/1\.\d+\s+(\d+)/', $response, $matches))
+		{
   			$code=intval($matches[1]);
   		} 
-		else {
+		else
+		{
   			return false;
   		};
  
@@ -234,5 +220,3 @@ class UrlInspector
   		return (($code>=200) && ($code<400));	
 	}
 }
-}
-?>

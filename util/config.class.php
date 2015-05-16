@@ -30,5 +30,3 @@ class Config
 		return $this->vars[$key];
 	}
 }
-
-?>

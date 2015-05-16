@@ -8,18 +8,6 @@ class Util
 	}
 
 	/**
-    *@credits: stackoverflow.com/questions/6800015/check-whether-the-function-needs-parameters
- 	*@date: April 4, 2013 8:29pm
-	*@author: Michael Orji
-	**/
-	/*public static function function_takes_arguments($function_name){
-
-		$reflector = new ReflectionFunction($function_name);
-		return $reflector->getNumberOfParameters();
-	}*/
-	
-	/**
-    *@credits: stackoverflow.com/questions/13847509/how-to-count-the-arguments-of-a-method-before-calling-that-method-which-is-inside
  	*@date: April 5, 2013 5:14am
 	*@author: Michael Orji
 	**/
@@ -42,7 +30,7 @@ class Util
 	
 	public static function get_calling_method($level = 0)
 	{
-		$level = $level + 2; //[0] is this method, [1] is the method whose caller we are looking for
+		$level = $level + 2; //[0] is this method, i.e get_calling_method, [1] is the method whose caller we are looking for
 		$callers = debug_backtrace();
 		$arr['caller_method'] = $callers[$level]['function'];
 		$arr['caller_class']  = $callers[$level]['class'];
@@ -62,19 +50,19 @@ class Util
 	{
 		return  unserialize(base64_decode($data));
 	}
+	
+	/*
+	* @implemented_date May 16, 2015 8:46 am
+	*/
 	public static function is_stringified($data)
 	{
-		//TO DO: implement
+		$decoded_data = base64_decode($data);
+		return self::is_serialized($decoded_data);
 	}
 	
-	/**
-	* @credits php manual: unserialize, first user contributed note
-	*/
 	public static function is_serialized($str)
 	{
 		$blSerialized=(@unserialize($str)||$str=='b:0;');
 		return $blSerialized;
 	}
 }
-
-?>

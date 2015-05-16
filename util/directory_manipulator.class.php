@@ -12,7 +12,6 @@ class DirectoryManipulator
 	}
 
 	/**
-	* @credits: http://stackoverflow.com/questions/13083053/php-copydir-function-problems/13083265#13083265
 	* @date   : Oct. 26, 2012
 	*/
 	public static function copy_directory($source, $destination)
@@ -28,42 +27,26 @@ class DirectoryManipulator
 
    		 while ($file = readdir($dir_handle)) 
 		 {
-        		if($file != "." && $file != ".." && !is_dir("$source/$file"))
-				{ 
-            			copy("$source/$file","$destination/$file");
-        		}
+        	if($file != "." && $file != ".." && !is_dir("$source/$file"))
+			{ 
+            	copy("$source/$file","$destination/$file");
+        	}
 
-        		if($file != "." && $file != ".." && is_dir("$source/$file"))
-				{
-            			self::copy_directory("$source/$file","$destination/$file");
-        		}
-    		}
+        	if($file != "." && $file != ".." && is_dir("$source/$file"))
+			{
+            		self::copy_directory("$source/$file","$destination/$file");
+        	}
+    	}
 
-    		closedir($dir_handle);
+    	closedir($dir_handle);
 	}
 
-	public static function strip_root_directory_from_directory_path_name($dir_name, $document_root = ''){
-
+	public static function strip_root_directory_from_directory_path_name($dir_name, $document_root = '')
+	{
 		$root_directory = empty($document_root) ? $_SERVER['DOCUMENT_ROOT'] : $document_root;
 		
 		$directory_name = str_replace('\\', '/', $dir_name);
 		
-		/*if(strpos($directory_name, '/home/content/47/11331547/html/Beta') !== false )
-		{
-			$root_directory = '/home/content/47/11331547/html/Beta';
-		}
-		else if(strpos($directory_name, '/home/content/47/11331547/html/Travelpaddy') !== false )
-		{
-			$root_directory = '/home/content/47/11331547/html/Travelpaddy';
-		}*/
-		
-		if(strpos($directory_name, '/home/travelpaddy/public_html/Beta') !== false )
-		{
-			$root_directory = '/home/travelpaddy/public_html/Beta';
-		}
-		
 		return str_replace($root_directory, '', $directory_name);
 	}
 }
-
-?>

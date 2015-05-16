@@ -1,5 +1,7 @@
 <?php
-
+/*
+* @author Michael Orji
+*/
 class SessionManipulator
 {
 	public static function session_started()
@@ -31,44 +33,51 @@ class SessionManipulator
 		}
 		else
 		{
-			session_regenerate_id(); //added march 22, 2013, incase of inconsistencies, remove this
+			session_regenerate_id();
 		}
 	}
 
-   public static function in_session_array($key){
-    return SessionManipulator::get_session_value($key) !== false;
-    //return isset($_SESSION[$key]);
-   }
+	public static function in_session_array($key)
+	{
+		return self::get_session_value($key) !== false;
+	}
 
-   public static function get_session_value($key){
-      if(isset($_SESSION[$key])){
-       return $_SESSION[$key];
-      }
-    return false;
-   }
+	public static function get_session_variable($key)
+	{
+		if(isset($_SESSION[$key]))
+		{
+			return $_SESSION[$key];
+		}
+		return false;
+	}
 
-   public static function get_session_values(){
-    return $_SESSION;
-   }
+	public static function get_session_variables()
+	{
+		return $_SESSION;
+	}
 
-   public static function set_session_values($arr){
-      foreach($arr AS $key => $value){
-        $_SESSION[$key] = $value;
-      }
-   }
+	public static function set_session_variables($arr)
+	{
+		foreach($arr AS $key => $value)
+		{
+			$_SESSION[$key] = $value;
+		}
+	}
 
-   public static function unset_session_values($arr){
-      if(count($arr) < 1){
-       $_SESSION = array();
-       session_destroy();
-       return;
-      }
-      foreach($arr AS $key){
-         if(isset($_SESSION[$key])){
-          unset($_SESSION[$key]);
-         }
-      }
-   }
+	public static function unset_session_variables($arr)
+	{
+		if(count($arr) < 1)
+		{
+			$_SESSION = array();
+			session_destroy();
+			return;
+		}
+		foreach($arr AS $key)
+		{
+			if(isset($_SESSION[$key]))
+			{
+				unset($_SESSION[$key]);
+			}
+		}
+	}
 }
-
-?>

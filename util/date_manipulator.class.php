@@ -1,5 +1,8 @@
 <?php
 
+/*
+* @dependencies : ArrayManipulator
+*/
 class DateManipulator
 {
 	public static function get_fancy_date($datetime, $format = "F d, Y")
@@ -66,9 +69,6 @@ class DateManipulator
 		}
 	}
 
-	/**
-	* adapted from vidiscript
-	*/
 	public static function date_difference($str_start, $str_end) 
 	{ 
  		$str_start = strtotime($str_start);
@@ -168,5 +168,3 @@ class DateManipulator
     	return $year_diff;
   	}	
 }
-
-?>

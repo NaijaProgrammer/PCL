@@ -11,5 +11,3 @@ class System
 		return false;
 	}
 }
-
-?>
