@@ -364,6 +364,8 @@ foreach($user_activities AS $user_activity)
 
 /**** NEW (and better) PAGINATION **/
 //@credits: http://www.otallu.com/tutorials/simple-php-mysql-pagination/
+//also check out : http://www.freezecoders.com/
+//use above sites as examples of tutorials to create
 function pagination($query,$per_page=10,$page=1,$url='?'){   
     global $conDB; 
     $query = "SELECT COUNT(*) as `num` FROM {$query}";
