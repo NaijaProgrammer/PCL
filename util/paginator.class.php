@@ -38,7 +38,7 @@ class Paginator
 		$processor_function = $this->results_processor;
 		return array
 		(
-			'processed_data'  => $processor_function( array('query_string'=>$this->get_query_string()) ),
+			'processed_data'  => $processor_function( array('query_string'=>$this->sql_query_string) ),
 			'paginated_links' => $this->get_links(),
 			'number_of_pages' => $this->get_number_of_pages(),
 			'query_string'    => $this->get_query_string() 
