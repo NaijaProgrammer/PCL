@@ -1,17 +1,23 @@
 <?php
+
+/**
+* @author: Michael Orji
+*/
 class Paginator
 {
 	private $res_per_page           = 0;
- 	private $sql_query_string       = ''; //the sql query (to) execute(d)
+ 	private $sql_query_string       = ''; //the sql query string to be executed
  	private $sql_query_string_count = 0;
- 	private $url                    = ''; //the current url
- 	private $qs                     = ''; //the query string after the url, e.g: "?m=m"
+ 	private $url                    = ''; 
+ 	private $qs                     = ''; //the query string of the url, e.g: "?m=m"
  	private $par_id                 = '';
  	private $max_visible_links      = 0;
 
 	private $num_of_pages           = 1;
 	private $current_query_resource = '';
 	private $links                  = '';
+	
+	private $current_page_sql_query_string = '';
 	
 	/**
 	* callback function that processes the results
@@ -38,11 +44,16 @@ class Paginator
 		$processor_function = $this->results_processor;
 		return array
 		(
-			'processed_data'  => $processor_function( array('query_string'=>$this->sql_query_string) ),
+			'processed_data'  => $processor_function( array('query_string'=>$this->get_current_sql_query_string()) ),
 			'paginated_links' => $this->get_links(),
 			'number_of_pages' => $this->get_number_of_pages(),
 			'query_string'    => $this->get_query_string() 
 		);
+	}
+	
+	public function get_sql_query_string()
+	{
+		return $this->sql_query_string;
 	}
 
 	public function get_links()
@@ -55,6 +66,11 @@ class Paginator
 		return $this->num_of_pages;
 	}
 
+	public function get_current_sql_query_string()
+	{
+		return $this->current_page_sql_query_string;
+	}
+	
 	public function get_current_query_resource()
 	{
 		return $this->current_query_resource;
@@ -79,6 +95,7 @@ class Paginator
    		$sql .= ( ($res_per_page) ? ' LIMIT '. $this->get_start_limit(). ', '. $res_per_page : '' );
 
 		$this->links                  = $this->paginate();
+		$this->current_page_sql_query_string = $sql;
 		$this->current_query_resource = mysql_query($sql);
 	}
 
@@ -125,7 +142,7 @@ class Paginator
       		for ($i = 1; $i <= $num_pages; $i++)
 			{  
        			$linked_page   = $url. $qs.'&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
-			//$linked_page   = $url. '&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
+				//$linked_page   = $url. '&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
        			$inserted_link = $this->get_link_number_button($current_page, $i, $linked_page). ' ';
        
        			$link_array[$i] = $inserted_link;
