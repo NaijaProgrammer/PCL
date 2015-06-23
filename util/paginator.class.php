@@ -327,3 +327,36 @@ function paginator_processor( $supplied_opts = array() )
 			
 		return $matrix;
 	}
+
+/*** Example Usage */
+$user_activities = UserModel::get_user_activities( UserModel::get_current_user_id(), array('orders'=>array(), 'limit'=>0) );
+			$top_pagination = new Paginator
+			(
+				array
+				(
+					'res_per_page'       => 10,
+					'sql_query_string'   => $user_activities['sql_query_string'],
+					'sql_query_count'    => $user_activities['num_of_rows'],
+					'url'                => SITE_URL. '/user-history/',
+					'qs'                 => '?m=m',
+					'par_id'             => 'top-pagination',
+					'max_visible_links'  => 10,
+					'results_processor'  => 'paginator_processor'
+				)
+			);
+			
+			$pagination_data = $top_pagination->get_data();
+			
+			$user_activities = $pagination_data['processed_data'];
+			$paginated_links = $pagination_data['paginated_links'];
+			$number_of_pages = $pagination_data['number_of_pages'];
+			$query_string    = $pagination_data['query_string'];
+			
+			echo $paginated_links; //display the links
+			
+/** loop through $user_activities, and do what you wish to do with it */
+foreach($user_activities AS $user_activity)
+{
+	//do something useful here
+}
+}
