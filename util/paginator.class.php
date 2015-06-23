@@ -124,8 +124,8 @@ class Paginator
       		//Make all the numbered pages
       		for ($i = 1; $i <= $num_pages; $i++)
 			{  
-       			//$linked_page   = $url. $qs.'&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
-				$linked_page   = $url. '&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
+       			$linked_page   = $url. $qs.'&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
+			//$linked_page   = $url. '&start_limit='. (($res_per_page * ($i - 1))). '&num_pages='. $num_pages;
        			$inserted_link = $this->get_link_number_button($current_page, $i, $linked_page). ' ';
        
        			$link_array[$i] = $inserted_link;
