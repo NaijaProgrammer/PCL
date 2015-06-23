@@ -299,3 +299,31 @@ class Paginator
  		return ($num % 2 == 0);
 	}
 }
+
+/**** Pagination processor example ****/
+function paginator_processor( $supplied_opts = array() )
+	{
+		$default_opts = array('query_string'=>'', 'query_data'=>'');
+		$opts = ArrayManipulator::copy_array($default_opts, $supplied_opts);
+		extract($opts);
+		
+		$db_obj = get_db_object();
+		$db_obj->execute_query($query_string);
+		$ids = $db_obj->return_result_as_matrix();
+		$ids = ArrayManipulator::reduce_redundant_matrix_to_array($ids, 'item_id');
+			
+		for($i = 0; $i < count($ids); $i++)
+		{
+				$current_id = $ids[$i];
+				$name_arr   = ItemModel::get_item_data($current_id, 'name');
+				
+				$matrix[$i]['id']   = $current_id;
+				$matrix[$i]['name'] = $name_arr['name'];
+				$matrix[$i] = ItemModel::get_item_data($current_id);
+		}
+			
+		$matrix['num_of_rows'] = count($matrix);
+		$matrix['sql_query_string'] = $query_string;
+			
+		return $matrix;
+	}
