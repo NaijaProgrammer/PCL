@@ -2,10 +2,10 @@
 class Paginator
 {
 	private $res_per_page           = 0;
- 	private $sql_query_string       = '';
+ 	private $sql_query_string       = ''; //the sql query (to) execute(d)
  	private $sql_query_string_count = 0;
- 	private $url                    = '';
- 	private $qs                     = '';
+ 	private $url                    = ''; //the current url
+ 	private $qs                     = ''; //the query string after the url, e.g: "?m=m"
  	private $par_id                 = '';
  	private $max_visible_links      = 0;
 
