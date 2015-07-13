@@ -63,7 +63,7 @@ class SessionManipulator
 			$_SESSION[$key] = $value;
 		}
 	}
-
+	
 	public static function unset_session_variables($arr)
 	{
 		if(count($arr) < 1)
@@ -79,5 +79,25 @@ class SessionManipulator
 				unset($_SESSION[$key]);
 			}
 		}
+	}
+	
+	public static function set_session_values($arr)
+	{
+		self::set_session_variables($arr);
+	}
+	
+	public static function get_session_values()
+	{
+		return self::get_session_variables();
+	}
+	
+	public static function unset_session_values($arr)
+	{
+		return self::unset_session_variables($arr);
+	}
+	
+	public static function get_session_value($key)
+	{
+		return self::get_session_variable($key);
 	}
 }
