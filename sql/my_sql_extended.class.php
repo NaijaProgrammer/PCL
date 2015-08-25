@@ -129,10 +129,11 @@ class MySqlExtended extends MySql
 	* @returns true or false based on whether a table (identified by $table_name) already exists in the current database
 	* @author: Michael Orji
 	* @date: June 14, 2013
+	* @date modified to use execute_query August 25, 2015
 	*/
 	public function table_exists($table_name)
 	{
-		$val = @mysql_query("select 1 from `$table_name`"); //Select 1 from table_name will return false if the table does not exist.
+		$val = $val = $this->execute_query("select 1 from `$table_name`"); //@mysql_query("select 1 from `$table_name`"); //Select 1 from table_name will return false if the table does not exist.
 		return ($val !== FALSE);
 	}
 	
