@@ -17,7 +17,7 @@ class DataSanitizer
 			return $data; 
 		}
 
-		return is_numeric($data) ? self::_sanitize_integer($data) : self::_sanitize_string_for_db_query($data, $allowed_tags);  
+		return is_numeric($data) ? self::_sanitize_numeric_data($data) : self::_sanitize_string_for_db_query($data, $allowed_tags);  
 	}
 
 	#replaces white-space with characters specified by you (default is the underscore(_) character)
@@ -107,8 +107,8 @@ class DataSanitizer
 		return $string;
 	}
 
-	private static function _sanitize_integer($int)
+	private static function _sanitize_numeric_data($data)
 	{
-		return intval($int);
+		return $data;
 	}
 }
