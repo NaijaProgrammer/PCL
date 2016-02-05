@@ -12,9 +12,12 @@ String
 and others...
 
 Example Usage: 
-require 'pcl/ini.php'; //include the ini file, 
+<?php
+//include the ini (bootstrap) file, 
+require 'pcl/ini.php'; 
 
-//proceed to call any classes
+//proceed to call classes as needed
+
 //determine paths to web application
 $current_script_paths = UrlInspector::get_path(dirname(__FILE__));
 
