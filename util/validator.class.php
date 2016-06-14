@@ -11,10 +11,19 @@ class Validator
 		{ 
       		if($matrix[$i]['error_condition'])
 			{
-      			$err['error']          = true;
-       			$err['status_message'] = $matrix[$i]['error_message'];
-       			$err['error_message']  = $matrix[$i]['error_message'];
-					
+      			$err['error'] = true;
+				
+				if( isset($matrix[$i]['error_message']) )
+				{
+					$err['status_message'] = $matrix[$i]['error_message'];
+					$err['error_message']  = $matrix[$i]['error_message'];
+				}
+				
+				if( isset($matrix[$i]['error_type']) )
+				{
+					$err['error_type'] = $matrix[$i]['error_type'];
+				}
+
        			return $err;
       		}   
    		}

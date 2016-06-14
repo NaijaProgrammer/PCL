@@ -17,7 +17,7 @@ class DataSanitizer
 			return $data; 
 		}
 
-		return is_numeric($data) ? self::_sanitize_numeric_data($data) : self::_sanitize_string_for_db_query($data, $allowed_tags);  
+		return is_numeric($data) ? self::_sanitize_integer($data) : self::_sanitize_string_for_db_query($data, $allowed_tags);  
 	}
 
 	#replaces white-space with characters specified by you (default is the underscore(_) character)
@@ -25,7 +25,6 @@ class DataSanitizer
 	{ 
 		$replacement = $replacement_char;
 		$string = ereg_replace($pattern, $replacement, $string);
-		$string = trim($string); 
 		return $string;
 	} 
 
@@ -40,7 +39,6 @@ class DataSanitizer
 	public static function remove_internal_whitespace($string) 
 	{ 
 		$string = preg_replace('/\s+/', ' ', $string); 
-		$string = trim($string); 
 		return $string;
 	} 
 
@@ -80,9 +78,9 @@ class DataSanitizer
 	#safely escape strings (for insertion into the database)
 	private static function _sanitize_string_for_db_query($string, $allowed_tags="")
 	{
-		$string = htmlspecialchars_decode($string);
-		$string = self::remove_internal_whitespace($string);
-		$string = trim($string);
+		//$string = htmlspecialchars_decode($string);
+		//$string = self::remove_internal_whitespace($string);
+		//$string = trim($string);
 		$string = strip_tags($string, $allowed_tags);
      
 		if(function_exists('mysql_real_escape_string'))
@@ -107,8 +105,8 @@ class DataSanitizer
 		return $string;
 	}
 
-	private static function _sanitize_numeric_data($data)
+	private static function _sanitize_integer($int)
 	{
-		return $data;
+		return $int; //intval($int);
 	}
 }
